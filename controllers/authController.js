@@ -11,14 +11,9 @@ const handleLogin = async(req,res)=>{
     if (!foundUser) return res.status(401).json({"message":"unauthorized"})
     const match = await bcrypt.compare(pwd, foundUser.password)
     if (match){
-        const roles = Object.values(foundUser.roles).filter(Boolean);
-        console.log(roles)
-        const accessToken = jwt.sign({
-            "UserInfo": {
-                "username": foundUser.username,
-                "roles": roles
-            }
-        },
+        const accessToken = jwt.sign(
+
+            {"usename":foundUser.username},
             process.env.ACCESS_TOKEN,
             {expiresIn:"5m"}
         )
