@@ -3,11 +3,18 @@ const express=require("express")
 const app=express()
 const mongoose=require("mongoose")
 const connectDB=require("./config/dbConn")
+const verifyJwt =require("./middleware/verifyJwt")
 connectDB();
 
 app.use(express.json())
+app.get("/",async(req,res)=>{
+    // res.statusCode = 200;
+    // res.setHeader('Content-Type', 'text/plain');
+    res.send('Hello World');
+})
 // app.use(express.urlencoded({ extended: false }));
 app.use("/auth",require("./routes/auth"))
+app.use(verifyJwt)
 app.use("/users",require("./routes/api/user"))
 
 
